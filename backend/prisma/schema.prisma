@@ -1,0 +1,168 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  password          String
+  firstName         String?
+  lastName          String?
+  isEmailVerified   Boolean   @default(false)
+  emailVerificationToken String?
+  emailVerificationExpires DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  portfolio         Portfolio?
+
+  @@map("users")
+}
+
+model Portfolio {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Basic Information
+  slug              String    @unique  // For shareable URLs
+  title             String?
+  tagline           String?
+  bio               String?   @db.Text
+  profileImage      String?
+  coverImage        String?
+
+  // Contact & Social
+  phone             String?
+  location          String?
+  website           String?
+  linkedinUrl       String?
+  githubUrl         String?
+  twitterUrl        String?
+
+  // Settings
+  isPublic          Boolean   @default(true)
+  isSearchable      Boolean   @default(true)
+
+  // Profile Completion
+  completionScore   Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  projects          Project[]
+  certifications    Certification[]
+  workHistory       WorkHistory[]
+  achievements      Achievement[]
+  skills            Skill[]
+
+  @@map("portfolios")
+}
+
+model Project {
+  id                String    @id @default(uuid())
+  portfolioId       String
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  title             String
+  description       String    @db.Text
+  role              String?
+  imageUrl          String?
+  projectUrl        String?
+  githubUrl         String?
+  technologies      String[]  // Array of tech stack
+  startDate         DateTime?
+  endDate           DateTime?
+  isFeatured        Boolean   @default(false)
+  order             Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("projects")
+}
+
+model Certification {
+  id                String    @id @default(uuid())
+  portfolioId       String
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  name              String
+  issuer            String
+  issueDate         DateTime
+  expiryDate        DateTime?
+  credentialId      String?
+  credentialUrl     String?
+  imageUrl          String?
+  description       String?   @db.Text
+  order             Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("certifications")
+}
+
+model WorkHistory {
+  id                String    @id @default(uuid())
+  portfolioId       String
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  company           String
+  position          String
+  location          String?
+  employmentType    String?   // Full-time, Part-time, Contract, Freelance
+  startDate         DateTime
+  endDate           DateTime?
+  isCurrentJob      Boolean   @default(false)
+  description       String?   @db.Text
+  achievements      String[]  // Array of achievements at this job
+  order             Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("work_history")
+}
+
+model Achievement {
+  id                String    @id @default(uuid())
+  portfolioId       String
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  title             String
+  description       String    @db.Text
+  date              DateTime
+  category          String?   // Award, Recognition, Milestone, etc.
+  issuer            String?
+  imageUrl          String?
+  order             Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("achievements")
+}
+
+model Skill {
+  id                String    @id @default(uuid())
+  portfolioId       String
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  name              String
+  category          String?   // Frontend, Backend, Database, DevOps, etc.
+  proficiency       Int       @default(50)  // 0-100
+  order             Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("skills")
+}
