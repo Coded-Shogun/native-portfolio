@@ -399,7 +399,7 @@ npm test -- --verbose
 
 Monitor these metrics:
 
-1. **Error Rate**: Should remain low (<0.1%)
+1. **Error Rate**: Should remain low (less than 0.1%)
 2. **Response Time**: Should improve (faster job matching)
 3. **Rate Limit Events**: Expected for first day as limits are tuned
 4. **Memory Usage**: May increase by ~15-30MB (acceptable)

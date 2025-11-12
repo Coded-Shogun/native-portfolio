@@ -40,5 +40,5 @@ JobApplication → Job + Portfolio
 
 ## Next Steps
 
-- [View schema file](../../backend/prisma/schema.prisma)
+- View schema file at `backend/prisma/schema.prisma`
 - [Learn about job matching](./job-matching-algorithm.md)

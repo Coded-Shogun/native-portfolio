@@ -377,12 +377,12 @@ logHttp(`${req.method} ${req.path}`, {
 
 | Metric | Target | Current Status |
 |--------|--------|----------------|
-| P50 Response Time | < 100ms | ✅ 12ms |
-| P95 Response Time | < 500ms | ✅ 45ms |
-| P99 Response Time | < 1000ms | ✅ 120ms |
-| Error Rate | < 0.1% | ✅ 0.01% |
-| Throughput | > 100 req/s | ✅ 250 req/s |
-| Concurrent Users | > 500 | ✅ 1000+ |
+| P50 Response Time | &lt; 100ms | ✅ 12ms |
+| P95 Response Time | &lt; 500ms | ✅ 45ms |
+| P99 Response Time | &lt; 1000ms | ✅ 120ms |
+| Error Rate | &lt; 0.1% | ✅ 0.01% |
+| Throughput | &gt; 100 req/s | ✅ 250 req/s |
+| Concurrent Users | &gt; 500 | ✅ 1000+ |
 
 ---
 

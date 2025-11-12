@@ -391,7 +391,7 @@ A: For tech roles: 2-4 months on average. Factors: market conditions, match scor
 A: 20-40% response rate is good. If lower, check match scores and profile completeness.
 
 **Q: When should I negotiate salary?**
-A: After receiving a written offer, before accepting. Research market rates first. [Read our negotiation guide](link).
+A: After receiving a written offer, before accepting. Research market rates first.
 
 ## Next Steps
 
