@@ -9,6 +9,9 @@ import workHistoryRoutes from './routes/workHistory.routes';
 import achievementRoutes from './routes/achievement.routes';
 import skillRoutes from './routes/skill.routes';
 import publicRoutes from './routes/public.routes';
+import jobsRoutes from './routes/jobs.routes';
+import careerPreferencesRoutes from './routes/careerPreferences.routes';
+import skillsGapRoutes from './routes/skillsGap.routes';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -33,6 +36,10 @@ app.use('/api/work-history', workHistoryRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/public', publicRoutes);
+// Job-Getting Features
+app.use('/api/jobs', jobsRoutes);
+app.use('/api/career-preferences', careerPreferencesRoutes);
+app.use('/api/skills-gap', skillsGapRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

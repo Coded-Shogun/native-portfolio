@@ -189,6 +189,40 @@ export default function Dashboard() {
           />
         </div>
 
+        {/* Job-Getting Features - NEW */}
+        <div className="mb-8 bg-gradient-to-r from-primary-600 to-blue-600 rounded-lg p-6 text-white">
+          <h2 className="text-2xl font-bold mb-2">🚀 Ready to Get Hired?</h2>
+          <p className="mb-4 text-primary-100">
+            Use our AI-powered tools to find jobs, track applications, and bridge skill gaps
+          </p>
+          <div className="grid md:grid-cols-4 gap-4">
+            <button
+              onClick={() => navigate('/job-recommendations')}
+              className="bg-white text-primary-600 px-4 py-3 rounded-lg hover:bg-primary-50 transition-colors font-medium text-center"
+            >
+              🎯 Job Matches
+            </button>
+            <button
+              onClick={() => navigate('/my-applications')}
+              className="bg-white text-primary-600 px-4 py-3 rounded-lg hover:bg-primary-50 transition-colors font-medium text-center"
+            >
+              📋 My Applications
+            </button>
+            <button
+              onClick={() => navigate('/skills-gap')}
+              className="bg-white text-primary-600 px-4 py-3 rounded-lg hover:bg-primary-50 transition-colors font-medium text-center"
+            >
+              📊 Skills Gap
+            </button>
+            <button
+              onClick={() => navigate('/career-preferences')}
+              className="bg-white text-primary-600 px-4 py-3 rounded-lg hover:bg-primary-50 transition-colors font-medium text-center"
+            >
+              ⚙️ Preferences
+            </button>
+          </div>
+        </div>
+
         {/* Quick Actions */}
         <div className="grid md:grid-cols-2 gap-6">
           <div className="card">

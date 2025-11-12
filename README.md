@@ -1,8 +1,40 @@
 # Career Portfolio Manager
 
-A full-stack marketplace platform for professionals to create, manage, and share their career portfolios. Built with React, Node.js, Express, PostgreSQL, and Prisma.
+**🎯 Mission: Solving Unemployment Through Technology**
 
-## Features
+A full-stack marketplace platform that goes beyond portfolios - it actively helps professionals get hired through AI-powered job matching, skills gap analysis, and application tracking. Built with React, Node.js, Express, PostgreSQL, and Prisma.
+
+## 🚀 Job-Getting Features (NEW!)
+
+**The platform isn't just about showing what you've done - it's about getting you hired.**
+
+### AI-Powered Job Matching
+- **Smart Recommendations**: Algorithm analyzes your skills, experience, and preferences to match you with relevant jobs
+- **Match Scoring**: See exactly why a job is a good fit (60-100% match scores)
+- **Gap Analysis**: Identify missing skills and get personalized learning recommendations
+- **Improvement Suggestions**: Get actionable advice to increase your match score
+
+### Application Tracking System
+- **Centralized Dashboard**: Track all your applications in one place
+- **Status Management**: Monitor progress from submission to offer
+- **Interview Scheduling**: Keep track of interview dates and stages
+- **Analytics**: See how many applications submitted, interviews scheduled, offers received
+- **Success Metrics**: Track time-to-hire and placement rates
+
+### Career Development Tools
+- **Skills Gap Analysis**: Compare your skills against target roles
+- **Learning Recommendations**: Get curated course and certification suggestions
+- **Readiness Score**: Know exactly how prepared you are for your dream job
+- **Career Preferences**: Set desired roles, locations, salary expectations
+- **Industry Trends**: Stay updated on in-demand skills and market trends
+
+### Profile Optimization
+- **Completion Tracking**: Real-time score showing how complete your profile is
+- **Gamification**: Badges, milestones, and achievements to encourage profile completion
+- **Profile Views Analytics**: See who's viewing your portfolio (recruiters vs. others)
+- **SEO-Optimized**: Shareable links that rank well in search engines
+
+## Core Portfolio Features
 
 ### For Professionals
 - **Comprehensive Portfolio Management**

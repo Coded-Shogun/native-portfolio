@@ -9,6 +9,10 @@ import Dashboard from './pages/Dashboard';
 import PortfolioEditor from './pages/PortfolioEditor';
 import PublicPortfolio from './pages/PublicPortfolio';
 import Marketplace from './pages/Marketplace';
+import JobRecommendations from './pages/JobRecommendations';
+import CareerPreferences from './pages/CareerPreferences';
+import MyApplications from './pages/MyApplications';
+import SkillsGapAnalysis from './pages/SkillsGapAnalysis';
 import NotFound from './pages/NotFound';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -49,6 +53,38 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <PortfolioEditor />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/job-recommendations"
+          element={
+            <PrivateRoute>
+              <JobRecommendations />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/career-preferences"
+          element={
+            <PrivateRoute>
+              <CareerPreferences />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/my-applications"
+          element={
+            <PrivateRoute>
+              <MyApplications />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/skills-gap"
+          element={
+            <PrivateRoute>
+              <SkillsGapAnalysis />
             </PrivateRoute>
           }
         />

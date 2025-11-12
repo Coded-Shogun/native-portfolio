@@ -18,10 +18,16 @@ model User {
   isEmailVerified   Boolean   @default(false)
   emailVerificationToken String?
   emailVerificationExpires DateTime?
+  role              String    @default("professional") // professional, recruiter, admin
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
   portfolio         Portfolio?
+  recruiterProfile  RecruiterProfile?
+  applications      JobApplication[]
+  savedJobs         SavedJob[]
+  sentMessages      Message[] @relation("SentMessages")
+  receivedMessages  Message[] @relation("ReceivedMessages")
 
   @@map("users")
 }
@@ -62,6 +68,8 @@ model Portfolio {
   workHistory       WorkHistory[]
   achievements      Achievement[]
   skills            Skill[]
+  careerPreferences CareerPreferences?
+  profileViews      ProfileView[]
 
   @@map("portfolios")
 }
@@ -165,4 +173,314 @@ model Skill {
   updatedAt         DateTime  @updatedAt
 
   @@map("skills")
+}
+
+// ============================================
+// JOB-GETTING FEATURES
+// ============================================
+
+model CareerPreferences {
+  id                String    @id @default(uuid())
+  portfolioId       String    @unique
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  // Job Search Status
+  isActivelySeeking Boolean   @default(true)
+  isOpenToOffers    Boolean   @default(true)
+  availableFrom     DateTime?
+
+  // Preferences
+  desiredRoles      String[]  // Array of job titles
+  desiredIndustries String[]  // Tech, Finance, Healthcare, etc.
+  preferredLocations String[] // Cities or "Remote"
+  workPreference    String?   // Remote, Hybrid, Onsite
+  employmentType    String[]  // Full-time, Part-time, Contract, Freelance
+
+  // Compensation
+  minSalary         Int?
+  maxSalary         Int?
+  currency          String    @default("USD")
+  salaryPeriod      String    @default("year") // year, month, hour
+
+  // Career Goals
+  careerGoals       String?   @db.Text
+  willingToRelocate Boolean   @default(false)
+  needsVisa         Boolean   @default(false)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("career_preferences")
+}
+
+model RecruiterProfile {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyName       String
+  companyWebsite    String?
+  companySize       String?   // 1-10, 11-50, 51-200, etc.
+  industry          String?
+  position          String?   // Recruiter, Hiring Manager, etc.
+  bio               String?   @db.Text
+
+  isVerified        Boolean   @default(false)
+  verifiedAt        DateTime?
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  postedJobs        Job[]
+  sentMessages      Message[] @relation("RecruiterMessages")
+
+  @@map("recruiter_profiles")
+}
+
+model Job {
+  id                String    @id @default(uuid())
+  recruiterId       String
+  recruiter         RecruiterProfile @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+
+  // Job Details
+  title             String
+  description       String    @db.Text
+  responsibilities  String?   @db.Text
+  requirements      String?   @db.Text
+  niceToHave        String?   @db.Text
+
+  // Company Info
+  companyName       String
+  companyLogo       String?
+  industry          String?
+
+  // Location & Work
+  location          String
+  locationType      String    @default("Remote") // Remote, Hybrid, Onsite
+  employmentType    String    @default("Full-time")
+
+  // Compensation
+  salaryMin         Int?
+  salaryMax         Int?
+  currency          String    @default("USD")
+  salaryPeriod      String    @default("year")
+  showSalary        Boolean   @default(true)
+
+  // Requirements
+  requiredSkills    String[]
+  experienceLevel   String?   // Entry, Mid, Senior, Lead
+  educationLevel    String?
+
+  // Status
+  isActive          Boolean   @default(true)
+  expiresAt         DateTime?
+  filledAt          DateTime?
+
+  // Metadata
+  views             Int       @default(0)
+  applicationCount  Int       @default(0)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  applications      JobApplication[]
+  matches           JobMatch[]
+  savedBy           SavedJob[]
+
+  @@index([isActive, createdAt])
+  @@index([location])
+  @@index([employmentType])
+  @@map("jobs")
+}
+
+model JobApplication {
+  id                String    @id @default(uuid())
+  jobId             String
+  job               Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Application Details
+  coverLetter       String?   @db.Text
+  resumeUrl         String?
+  portfolioSnapshot String?   @db.Text // JSON snapshot of portfolio at time of application
+
+  // Status Tracking
+  status            String    @default("submitted") // submitted, reviewing, interview, rejected, offer, accepted
+  statusUpdatedAt   DateTime  @default(now())
+
+  // Interview Tracking
+  interviewDate     DateTime?
+  interviewNotes    String?   @db.Text
+  interviewStage    String?   // phone_screen, technical, final, etc.
+
+  // Outcome
+  rejectedAt        DateTime?
+  rejectionReason   String?   @db.Text
+  offerReceivedAt   DateTime?
+  offerAmount       Int?
+  acceptedAt        DateTime?
+
+  // Notes
+  notes             String?   @db.Text
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([jobId, userId])
+  @@index([userId, status])
+  @@map("job_applications")
+}
+
+model JobMatch {
+  id                String    @id @default(uuid())
+  jobId             String
+  job               Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  portfolioId       String
+
+  // Match Score
+  matchScore        Int       // 0-100
+  matchReasons      String[]  // ["React experience", "Remote preference match", etc.]
+  missingSkills     String[]  // Skills the candidate needs
+
+  // Status
+  shown             Boolean   @default(false)
+  viewed            Boolean   @default(false)
+  dismissed         Boolean   @default(false)
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([jobId, portfolioId])
+  @@index([portfolioId, matchScore])
+  @@map("job_matches")
+}
+
+model SavedJob {
+  id                String    @id @default(uuid())
+  jobId             String
+  job               Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  notes             String?   @db.Text
+
+  createdAt         DateTime  @default(now())
+
+  @@unique([jobId, userId])
+  @@index([userId])
+  @@map("saved_jobs")
+}
+
+model ProfileView {
+  id                String    @id @default(uuid())
+  portfolioId       String
+  portfolio         Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  // Viewer Info (optional - can be anonymous)
+  viewerType        String    // recruiter, professional, anonymous
+  viewerId          String?   // User ID if logged in
+  viewerCompany     String?   // If recruiter
+
+  // Context
+  source            String?   // marketplace, direct_link, search, etc.
+  referrer          String?
+
+  // Metadata
+  ipAddress         String?
+  userAgent         String?
+  duration          Int?      // Seconds spent viewing
+
+  createdAt         DateTime  @default(now())
+
+  @@index([portfolioId, createdAt])
+  @@index([viewerType])
+  @@map("profile_views")
+}
+
+model Message {
+  id                String    @id @default(uuid())
+  senderId          String
+  sender            User      @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  recipientId       String
+  recipient         User      @relation("ReceivedMessages", fields: [recipientId], references: [id], onDelete: Cascade)
+
+  // For recruiter-specific features
+  recruiterId       String?
+  recruiter         RecruiterProfile? @relation("RecruiterMessages", fields: [recruiterId], references: [id])
+
+  subject           String?
+  message           String    @db.Text
+  jobId             String?   // If related to a specific job
+
+  // Status
+  isRead            Boolean   @default(false)
+  readAt            DateTime?
+  repliedAt         DateTime?
+
+  createdAt         DateTime  @default(now())
+
+  @@index([recipientId, isRead])
+  @@index([senderId])
+  @@map("messages")
+}
+
+// Skills Gap Analysis
+model SkillGap {
+  id                String    @id @default(uuid())
+  portfolioId       String
+
+  // Target Analysis
+  targetRole        String
+  targetIndustry    String?
+
+  // Gap Analysis
+  currentSkills     String[]
+  requiredSkills    String[]
+  missingSkills     String[]
+  skillsToImprove   String[]
+
+  // Recommendations
+  learningPaths     String[]  // Course recommendations
+  estimatedTime     Int?      // Months to bridge gap
+
+  // Metadata
+  analysisDate      DateTime  @default(now())
+  expiresAt         DateTime?
+
+  @@index([portfolioId])
+  @@map("skill_gaps")
+}
+
+// Success Metrics - Track job placements
+model JobPlacement {
+  id                String    @id @default(uuid())
+  userId            String
+  portfolioId       String
+
+  // Job Details
+  jobTitle          String
+  companyName       String
+  industry          String?
+  location          String?
+  employmentType    String
+  startDate         DateTime
+
+  // Source tracking
+  foundVia          String    // "platform_match", "marketplace", "direct_apply", etc.
+  applicationId     String?
+
+  // Success metrics
+  salary            Int?
+  currency          String?
+  timeToHire        Int?      // Days from profile creation to hire
+
+  // Verified
+  isVerified        Boolean   @default(false)
+  verifiedAt        DateTime?
+
+  createdAt         DateTime  @default(now())
+
+  @@index([createdAt])
+  @@map("job_placements")
 }
