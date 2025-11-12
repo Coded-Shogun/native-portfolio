@@ -76,6 +76,18 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Enterprise Features',
+      items: [
+        'developer-guide/enterprise-overview',
+        'developer-guide/enterprise-security',
+        'developer-guide/compliance-certifications',
+        'developer-guide/performance-optimization',
+        'developer-guide/monitoring-logging',
+        'developer-guide/enterprise-migration',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Development',
       items: [
         'developer-guide/running-locally',
@@ -94,6 +106,8 @@ const sidebars: SidebarsConfig = {
         'api/introduction',
         'api/authentication',
         'api/error-handling',
+        'api/rate-limiting',
+        'api/security',
       ],
     },
     {
