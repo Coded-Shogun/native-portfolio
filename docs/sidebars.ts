@@ -83,6 +83,7 @@ const sidebars: SidebarsConfig = {
         'developer-guide/compliance-certifications',
         'developer-guide/performance-optimization',
         'developer-guide/monitoring-logging',
+        'developer-guide/enterprise-testing',
         'developer-guide/enterprise-migration',
       ],
     },

@@ -1,0 +1,19 @@
+{
+  "name": "career-portfolio-e2e",
+  "version": "1.0.0",
+  "description": "Cypress E2E tests for Career Portfolio Manager",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "test:e2e": "cypress run --spec 'cypress/e2e/**/*.cy.ts'",
+    "test:e2e:security": "cypress run --spec 'cypress/e2e/security/**/*.cy.ts'",
+    "test:e2e:enterprise": "cypress run --spec 'cypress/e2e/enterprise/**/*.cy.ts'"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.2",
+    "@cypress/webpack-preprocessor": "^6.0.1",
+    "typescript": "^5.3.3"
+  }
+}
