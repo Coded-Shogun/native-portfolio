@@ -93,6 +93,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'developer-guide/running-locally',
         'developer-guide/testing',
+        'developer-guide/storybook',
         'developer-guide/deployment',
         'developer-guide/contributing',
       ],

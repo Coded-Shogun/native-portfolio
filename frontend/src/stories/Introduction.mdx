@@ -1,0 +1,163 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# Career Portfolio Manager - Storybook
+
+Welcome to the **Career Portfolio Manager** component library! This Storybook contains all the UI components, pages, and design patterns used throughout the application.
+
+## 🎨 What is Storybook?
+
+Storybook is an open-source tool for building UI components in isolation. It allows you to:
+
+- **Browse components** in different states and variations
+- **Test components** interactively in the browser
+- **Document components** with live examples and usage guidelines
+- **Develop components** independently from the main application
+- **Share components** with designers, developers, and stakeholders
+
+## 📚 Component Library
+
+Our component library is organized into the following categories:
+
+### Components
+
+Reusable UI components that form the building blocks of the application:
+
+- **Button** - Primary interaction elements with multiple variants
+- **Input** - Form input fields with validation support
+- **Card** - Content containers with flexible layouts
+- **Badge** - Status indicators and labels
+- **Alert** - Notification and message displays
+
+### Pages
+
+Full page components that combine multiple UI elements:
+
+- **NotFound** - 404 error page
+- More page examples coming soon...
+
+## 🚀 Getting Started
+
+### Running Storybook
+
+To start Storybook locally:
+
+```bash
+cd frontend
+npm run storybook
+```
+
+This will start Storybook on [http://localhost:6006](http://localhost:6006)
+
+### Building Storybook
+
+To build a static version of Storybook:
+
+```bash
+npm run build-storybook
+```
+
+## 🎯 Using Components
+
+Each component story includes:
+
+1. **Interactive controls** - Adjust props in real-time
+2. **Multiple variants** - See different states and configurations
+3. **Documentation** - Usage guidelines and prop descriptions
+4. **Code examples** - Copy-paste ready code snippets
+
+### Example Usage
+
+```tsx
+import { Button } from '@/components/Button';
+
+function MyComponent() {
+  return (
+    <Button variant="primary" size="md" onClick={() => console.log('Clicked!')}>
+      Click Me
+    </Button>
+  );
+}
+```
+
+## 🎨 Design System
+
+Our design system is built on **Tailwind CSS** and follows these principles:
+
+### Colors
+
+- **Primary**: Blue tones for primary actions and branding
+- **Secondary**: Gray tones for secondary elements
+- **Success**: Green for positive actions and confirmations
+- **Warning**: Yellow for caution and important notices
+- **Danger/Error**: Red for errors and destructive actions
+- **Info**: Cyan for informational messages
+
+### Typography
+
+- **Font Family**: System font stack for optimal performance
+- **Sizes**: Small (sm), Medium (md), Large (lg)
+- **Weights**: Regular (400), Medium (500), Semibold (600), Bold (700)
+
+### Spacing
+
+Consistent spacing scale using Tailwind's default spacing:
+- `sm`: 0.5rem (8px)
+- `md`: 1rem (16px)
+- `lg`: 1.5rem (24px)
+
+### Border Radius
+
+- **Default**: 0.5rem (rounded-lg)
+- **Pill**: 9999px (rounded-full)
+
+## 🛠 Development Guidelines
+
+### Creating New Components
+
+1. Create the component in `src/components/`
+2. Create a corresponding `.stories.tsx` file
+3. Document all props with TypeScript interfaces
+4. Add JSDoc comments for prop descriptions
+5. Include multiple story variants
+
+### Story Best Practices
+
+- **Start with a Default story** showing the most common usage
+- **Create variants** for different props and states
+- **Include edge cases** like disabled, loading, error states
+- **Add interactive examples** that demonstrate real-world usage
+- **Document accessibility** considerations
+
+## 📖 Additional Resources
+
+- [Storybook Documentation](https://storybook.js.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [React Documentation](https://react.dev)
+
+## 🤝 Contributing
+
+When adding new components:
+
+1. Follow the existing component structure
+2. Include comprehensive stories
+3. Add TypeScript types for all props
+4. Test components in different states
+5. Update this documentation
+
+## 📝 Component Checklist
+
+When creating a new component, ensure:
+
+- [ ] Component is fully typed with TypeScript
+- [ ] Props are documented with JSDoc comments
+- [ ] Multiple story variants are included
+- [ ] Component follows design system guidelines
+- [ ] Component is accessible (ARIA labels, keyboard navigation)
+- [ ] Component is responsive
+- [ ] Loading and error states are handled
+
+---
+
+Happy building! 🎉
